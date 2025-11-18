@@ -1,0 +1,119 @@
+/* Variables de color para el tema Sci-Fi/Glitch */
+:root {
+    --primary-color: #f0f;      /* Magenta Intenso */
+    --secondary-color: #0ff;    /* Cian Intenso */
+    --accent-color: #ff0;       /* Amarillo Neón para alertas */
+    --background-color: #111;
+}
+
+/* Base del Documento */
+body {
+    background-color: var(--background-color);
+    color: var(--secondary-color);
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden; 
+    position: relative;
+    /* Efecto de línea de scan (simula una pantalla CRT antigua) */
+    background-image: linear-gradient(rgba(17, 17, 17, 0.7) 1px, transparent 1px);
+    background-size: 100% 2px;
+}
+
+/* Contenedor del Maniquí */
+#mannequin-container {
+    position: absolute;
+    width: 60vh; 
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* Sombras y contraste alto para el efecto holográfico */
+    filter: drop-shadow(0 0 10px var(--primary-color)) contrast(180%);
+    transition: all 0.1s ease-out; /* Para que el glitch sea más reactivo */
+}
+
+.outfit-piece {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.9;
+    /* El modo de mezcla "screen" hace que los colores parezcan luz proyectada */
+    mix-blend-mode: screen; 
+    transition: transform 0.5s ease-out, filter 0.5s ease-out, opacity 0.3s; 
+    image-rendering: crisp-edges; /* Puede dar un look más pixelado/digital */
+}
+
+/* Interfaz de Texto (El HUD) */
+#interface {
+    position: absolute;
+    top: 5vh;
+    left: 5vh;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    /* Borde doble para simular una ventana de terminal */
+    border: 2px solid var(--secondary-color);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+    z-index: 10;
+    max-width: 300px;
+}
+
+#interface h1 {
+    font-size: 1.8em;
+    color: var(--primary-color);
+    text-shadow: 0 0 8px var(--primary-color);
+    margin-top: 0;
+    border-bottom: 1px dashed var(--secondary-color);
+    padding-bottom: 5px;
+}
+
+#interface p {
+    font-size: 0.9em;
+    line-height: 1.4;
+    margin-bottom: 15px;
+}
+
+.status {
+    color: var(--accent-color); /* Usa amarillo neón para indicar estado */
+    margin-top: 10px;
+    /* Pequeña animación de parpadeo para el texto de estado */
+    animation: blink 1s step-end infinite;
+}
+
+/* --- Animaciones y Efectos de Glitch --- */
+
+/* 1. Glitch Activo al Mover el Mouse Rápidamente (aplicado al body) */
+.glitch-active {
+    /* Distorsiona todo el contenido de la pantalla brevemente */
+    transform: perspective(100px) rotateX(1deg) rotateY(-1deg);
+    filter: hue-rotate(90deg) contrast(150%);
+    transition: none;
+}
+
+/* 2. Keyframes del Glitch: Desplazamiento y Ruido */
+@keyframes glitch-animation {
+    0% {
+        transform: translate(3px, -3px) scale(1.02);
+        filter: hue-rotate(10deg) saturate(1.8);
+    }
+    50% {
+        transform: translate(-3px, 3px) scale(0.98);
+        filter: hue-rotate(0deg) saturate(1);
+    }
+    100% {
+        transform: translate(0px, 0px) scale(1);
+        filter: hue-rotate(20deg) saturate(1.5);
+    }
+}
+
+/* 3. Animación de Parpadeo (Blink) para el texto de estado */
+@keyframes blink {
+    50% {
+        opacity: 0.2;
+    }
+}
