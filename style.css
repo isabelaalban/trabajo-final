@@ -51,7 +51,7 @@ body {
 
 /* Interfaz de Texto (El HUD) */
 #interface {
-    position: absolute;
+    
     top: 5vh;
     left: 5vh;
     background: rgba(0, 0, 0, 0.7);
@@ -116,4 +116,30 @@ body {
     50% {
         opacity: 0.2;
     }
+}
+#outfit-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  justify-items: center;
+  padding: 20px;
+}
+
+.item {
+  width: 180px;
+  height: 260px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.item img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }

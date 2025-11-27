@@ -1,13 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('mannequin-container');
     const statusText = document.querySelector('.status');
     const body = document.body;
+    const top = document.getElementById('top');
+    const pantalon = document.getElementById('pantalon');
+    const chaqueta = document.getElementById('chaqueta');
 
     // 1. Catálogo de prendas: define la variabilidad.
     const assets = {
         top: ['assets/top-1.png', 'assets/top-2.png', 'assets/top-3.png'],
-        bottom: ['assets/pantalon-1.png', 'assets/pantalon-2.png', 'assets/pantalon-3.png'],
-        jacket: ['assets/chaqueta-1.png', 'assets/chaqueta-2.png', 'assets/chaqueta-3.png'],
+        pantalon: ['assets/pantalon-1.png', 'assets/pantalon-2.png', 'assets/pantalon-3.png'],
+        chaqueta: ['assets/chaqueta-1.png', 'assets/chaqueta-2.png', 'assets/chaqueta-3.png'],
         // Puedes añadir más: shoes, accessories, etc.
     };
 
@@ -16,48 +18,28 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastY = 0;
     let velocityThreshold = 100; // El umbral de velocidad del mouse para activar
 
-    /**
-     * Función que selecciona una prenda al azar.
-     */
-    const getRandomAsset = (category) => {
-        const list = assets[category];
-        const randomIndex = Math.floor(Math.random() * list.length);
-        return list[randomIndex];
-    };
-
-    /**
-     * Función que aplica filtros CSS para la distorsión/glitch (No Linealidad y Expresividad)
-     */
-    const applyChaosFilters = (element) => {
-        const hue = Math.floor(Math.random() * 360);
-        const sat = Math.random() * 0.5 + 1; // 1 a 1.5
-        const blur = Math.random() * 2; // 0 a 2px
-        const contrast = Math.random() * 0.5 + 1.2; // 1.2 a 1.7
-
-        // Aplicar filtros aleatorios y un pequeño offset de posición (glitch)
-        element.style.filter = `hue-rotate(${hue}deg) saturate(${sat}) blur(${blur}px) contrast(${contrast})`;
-        element.style.transform = `translate(${Math.random() * 10 - 5}px, ${Math.random() * 10 - 5}px)`;
-    };
+    // Función para generar un número aleatorio entre un valor mínimo y un máximo
+function numeroAleatorio(min, max) {
+  return Math.ceil(Math.random() * (max - min) + min - 1);
+}
 
     /**
      * Función principal que genera y renderiza el outfit.
      */
     const generateOutfit = () => {
-        container.innerHTML = ''; // Limpia el contenedor
+        top.innerHTML = ''; // Limpia el contenedor
+        pantalon.innerHTML = ''; // Limpia el contenedor
+        chaqueta.innerHTML = ''; // Limpia el contenedor
+        
         
         // 1. Genera cada pieza y la inserta
-        Object.keys(assets).forEach(category => {
-            const imgSrc = getRandomAsset(category);
-            const imgElement = document.createElement('img');
-            imgElement.src = imgSrc;
-            imgElement.className = 'outfit-piece';
-            imgElement.style.zIndex = (category === 'jacket') ? 3 : 2; // Controla capas
-            
-            // 2. Aplica el caos visual a la pieza
-            applyChaosFilters(imgElement);
+            const imgSrcTop = assets.top[numeroAleatorio(0, assets.top.length - 1)];
+            const imgSrcChaqueta = assets.chaqueta[numeroAleatorio(0, assets.chaqueta.length - 1)];
+            const imgSrcPantalon = assets.pantalon[numeroAleatorio(0, assets.pantalon.length - 1)];
 
-            container.appendChild(imgElement);
-        });
+            top.src = imgSrcTop;
+            chaqueta.src = imgSrcChaqueta;
+            pantalon.src = imgSrcPantalon;
 
         // 3. Activa el efecto de glitch en el body y lo desactiva rápidamente
         body.classList.add('glitch-active');
